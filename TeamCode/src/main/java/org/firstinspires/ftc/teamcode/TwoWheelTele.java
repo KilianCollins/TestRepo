@@ -1,23 +1,18 @@
 //gamepad 1 left stick y = forward
 //gamepad 1 left stick x = strafe
-
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 /**
  * Created by Alyssa on 12-05-19
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp (name = "New Tele" , group = "testPrograms")
-public class NewTeleOp extends LinearOpMode{
-    private DcMotor frontRightMotor;
-    private DcMotor frontLeftMotor;
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp (name = "2 Wheel Tele" , group = "testPrograms")
+public class TwoWheelTele extends LinearOpMode{
     private DcMotor backRightMotor;
     private DcMotor backLeftMotor;
 
@@ -30,10 +25,9 @@ public class NewTeleOp extends LinearOpMode{
 
     @Override
     public void runOpMode () throws InterruptedException {
-        frontRightMotor = hardwareMap.dcMotor.get("frontRight");
-        frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
+
         backRightMotor = hardwareMap.dcMotor.get("rearRight");
-        backLeftMotor = hardwareMap.dcMotor.get("rearRight");
+        backLeftMotor = hardwareMap.dcMotor.get("rearLeft");
 
         armMotor = hardwareMap.dcMotor.get("armMotor");
 
@@ -42,15 +36,13 @@ public class NewTeleOp extends LinearOpMode{
 
 
         //directions
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         //arm motor(s)
-        armMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        armMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightIntakeServo.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftIntakeServo.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
 
@@ -60,34 +52,25 @@ public class NewTeleOp extends LinearOpMode{
 
         //Drive Variables
         double drive;
-        double strafe;
         double rotate;
 
-        double front_left_speed;
         double rear_left_speed;
-        double front_right_speed;
         double rear_right_speed;
 
-        //arm motor speed
-        double arm_speed = 1;
+        //arm motor speed// 60 is the one that works
+        double arm_speed = 0.75;
 
         waitForStart();
         while (opModeIsActive()){
 
             drive = gamepad1.right_stick_y;
-            strafe = gamepad1.right_stick_x;
             rotate = -gamepad1.left_stick_x;
 
-            //mightneed clarifying parenthaseise
-            front_left_speed = (drive - strafe) + rotate;
-            rear_left_speed = (drive + strafe) + rotate;
-            front_right_speed = (drive + strafe) - rotate;
-            rear_right_speed = (drive - strafe) - rotate;
+            rear_right_speed = rotate  + drive;
+            rear_left_speed = rotate - drive;
 
 //-----------------------------------Gamepad 1 Start------------------------------------------------
             //Drive
-            frontRightMotor.setPower(limit(front_right_speed));
-            frontLeftMotor.setPower(limit(front_left_speed));
             backRightMotor.setPower(limit(rear_right_speed));
             backLeftMotor.setPower(limit(rear_left_speed));
 //------------------------------------Gamepad 1 End-------------------------------------------------
@@ -110,13 +93,6 @@ public class NewTeleOp extends LinearOpMode{
                 rightIntakeServo.setPower(-1);
                 leftIntakeServo.setPower(-1);
             }
-            ////////////////////////////////////
-            else{
-                rightIntakeServo.setPower(0);
-                leftIntakeServo.setPower(0);
-            }
-
-
             idle();
         }
     }

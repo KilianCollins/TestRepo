@@ -99,13 +99,19 @@ public class Samantha
         rearRight.setPower(0);
         armMotor.setPower(0);
 
+        // set defalt mode tp slow
+
+
+
+
+
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
         //leftIntake  = hwMap.get(CRServo.class, "leftIntake");

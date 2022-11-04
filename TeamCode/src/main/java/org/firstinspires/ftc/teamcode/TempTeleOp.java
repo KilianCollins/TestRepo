@@ -34,6 +34,9 @@ public class TempTeleOp extends LinearOpMode{
         waitForStart();
         while (opModeIsActive()){
 
+
+
+
             drive = gamepad1.right_stick_y;
             strafe = gamepad1.right_stick_x;
             rotate = gamepad1.left_stick_x;
@@ -47,6 +50,10 @@ public class TempTeleOp extends LinearOpMode{
 //-----------------------------------Gamepad 1 Start------------------------------------------------
             //Drive
             Samantha.frontLeft.setPower(limit(front_left_speed));
+
+
+
+
             Samantha.rearLeft.setPower(limit(rear_left_speed));
             Samantha.frontRight.setPower(limit(front_right_speed));
             Samantha.rearRight.setPower(limit(rear_right_speed));
