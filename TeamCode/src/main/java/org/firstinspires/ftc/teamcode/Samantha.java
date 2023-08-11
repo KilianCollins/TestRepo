@@ -61,6 +61,8 @@ public class Samantha
     //public CRServo  leftIntake    = null;
     //public CRServo    rightIntake   = null;
 
+    //double Front_Half_Dt = frontRight, frontLeft
+
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;

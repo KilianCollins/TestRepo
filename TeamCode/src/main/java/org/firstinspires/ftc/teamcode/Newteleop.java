@@ -2,33 +2,40 @@
 //gamepad 1 left stick x = strafe
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.FLOAT;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-/*** Created by Alyssa on 12-05-19*/
-
-@Disabled
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp (name = "Working Tele" , group = "testPrograms")
-public class WorkingTeleOp extends LinearOpMode{
+/**
+ * Created by Alyssa on 12-05-19
+ */
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp (name = "New Tele" , group = "testPrograms")
+public class Newteleop extends LinearOpMode{
     //dt wheels
     private DcMotor frontRightMotor;
     private DcMotor frontLeftMotor;
     private DcMotor backRightMotor;
     private DcMotor backLeftMotor;
 
+    //motor power
+    // double motor_power = 0.5;
+
     //arm
     private DcMotor armMotor;
-    int height = 0;
-    int cone_pos = 300;
-    int pole_pos = 1450;
+    int top = 2500;
+    int bottom = 100;
     //intake
     private CRServo rightIntakeServo;
     private CRServo leftIntakeServo;
 
-    //idk what this is
-   //private DcMotor armlift, armlift2;
+
+    //private DcMotor armlift, armlift2;
+
+
+
 
 
     @Override
@@ -38,16 +45,7 @@ public class WorkingTeleOp extends LinearOpMode{
         backRightMotor = hardwareMap.dcMotor.get("rearRight");
         backLeftMotor = hardwareMap.dcMotor.get("rearLeft");
 
-
         armMotor = hardwareMap.dcMotor.get("armMotor");
-        //arm
-        armMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //arm motor(s)
-
-
-
 
         rightIntakeServo = hardwareMap.crservo.get("rightIntake");
         leftIntakeServo = hardwareMap.crservo.get("leftIntake");
@@ -68,8 +66,8 @@ public class WorkingTeleOp extends LinearOpMode{
         //armlift = (DcMotor) hardwareMap.get(DcMotor.class, "armlift");
         //armlift2 = (DcMotor) hardwareMap.get(DcMotor.class,"armlift2");
 
-            // hopefull it makes it hover, it does not stop it but it slower its decent
-       // armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // hopefull it makes it hover, it does not stop it but it slower its decent
+        // armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //intake
         rightIntakeServo.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -80,21 +78,9 @@ public class WorkingTeleOp extends LinearOpMode{
         double drive;
         double strafe;
         double rotate;
+        //arm variables
 
-        /*arm variables position for specifyed positon
-            //pick up
-        double front_pick_up_cone_pos; //from ground, hover 1 inch above cone top then have button comand that had arm press down on to arm
-        double back_pick_up_cone_pos; //from ground, same as above /\
 
-            //drop off, & zero power behavior AKA set pos
-        double front_mid_pole_drop_pos; // set it to have cone base hover 1 inch obove pole
-        double back_mid_pole_drop_pos; // same as above /\
-
-            // this holds the distance val that when pressed the arm will "press down" from the hover position
-            // and then when button is not pressed arm will return to hover pos
-        double front_temp_press_down;
-        double back_temp_press_down;
-                                        */
         //drive variables
         double front_left_speed;
         double rear_left_speed;
@@ -102,9 +88,11 @@ public class WorkingTeleOp extends LinearOpMode{
         double rear_right_speed;
 
         //arm motor speed// 60 rpm motor is the one that works
-        double arm_speed = 0.75;
+        double arm_speed = 0.65;
 
-        int arm_added_position = 100;
+        //reseting encoders so the ptog can find its home
+        // resetArmEncoder();
+        // int arm_added_position = 100;
         waitForStart();
         while (opModeIsActive()){ //haddons requests, Stick drive
             drive = gamepad1.left_stick_y;
@@ -135,36 +123,43 @@ public class WorkingTeleOp extends LinearOpMode{
             //arm
 
 //------------------------------------Gamepad 1 End-------------------------------------------------
-            //arm motor set specified pos, ineed to
-            /*if(gamepad1.right_bumper){
-                armMotor.setPower(bottom_pos);// bottom poss needs to be set to a specific amount of tics, idk how to get ticks form motor ask boen or alyssa
-                armMotor.getMode(armMotor);//needs to get the current positon of the motor and then
-                //how do i get ticks? and use them
 
-            }*/
+
 //             i have to reset encoders during init
             //armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-  // IT WOOOOOOOOOOOOOOOOOOOORKSSSSSSSSS YSDFSJKRF,SJKBFG;SKJDNLFS!!!!!!!!
+            // IT WOOOOOOOOOOOOOOOOOOOORKSSSSSSSSS YSDFSJKRF,SJKBFG;SKJDNLFS!!!!!!!!
 
+            // armMotor.setPower(0.65);
+            if(gamepad1.right_bumper){
+                armMotor.setPower(0.65);
+                armMotor.setTargetPosition(100);
+                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-
-            if(gamepad1.right_trigger > 0){
-                height += gamepad1.right_trigger * 10;
-            }else if(gamepad1.left_trigger > 0){
-                height -= gamepad1.left_trigger * 10;
-            }
-            else if(gamepad1.right_bumper){
-                height = cone_pos;
-            }
-            else if (gamepad1.left_bumper){
-                height = pole_pos;
 
             }
-            armMotor.setTargetPosition(height);
-            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            armMotor.setPower(arm_speed);
+            if (gamepad1.left_bumper){
+                armMotor.setPower(0.65);
+                armMotor.setTargetPosition(2500);
+                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+            else{
+                armMotor.setPower(0);
+                //armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                //armMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            }
 
+
+
+       /*
+            if(gamepad1.left_bumper){
+                got_to_top_pos();
+            }
+
+            else{
+                armMotor.setZeroPowerBehavior(FLOAT);
+            }
+                 */
             ////////////////////////////
             if (gamepad1.y){
                 rightIntakeServo.setPower(1);
@@ -197,4 +192,40 @@ public class WorkingTeleOp extends LinearOpMode{
             return number;
         }
     }
+    ////////
+    public void resetArmEncoder() {
+        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    ////////
+    public void killarmpower() {
+        armMotor.setZeroPowerBehavior(FLOAT);
+    }
+    //////////
+   /* public  void  got_to_bottom_pos(){
+        //armMotor.setZeroPowerBehavior(BRAKE);
+       // int bottom = 100;
+        armMotor.setTargetPosition(250);
+        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotor.setPower(0.65);
+        while(armMotor.isBusy() && opModeIsActive()) {
+        }
+        ///might hAVE to remove\/
+        armMotor.setPower(0);
+    }
+
+    public  void  got_to_top_pos(){
+        //armMotor.setZeroPowerBehavior(BRAKE);
+        armMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        armMotor.setTargetPosition(100);
+        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotor.setPower(0.65);
+        while(armMotor.isBusy() && opModeIsActive()) {
+        }
+        ///might hAVE to remove\/
+        armMotor.setPower(0);
+    }*/
+
+
 }
+

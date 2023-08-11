@@ -2,6 +2,7 @@
 //gamepad 1 left stick x = strafe
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
  */
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp (name = "2 Wheel Tele" , group = "testPrograms")
-public class TwoWheelTele extends LinearOpMode{
+public class TwoWheelTeleOp extends LinearOpMode{
     private DcMotor backRightMotor;
     private DcMotor backLeftMotor;
 
