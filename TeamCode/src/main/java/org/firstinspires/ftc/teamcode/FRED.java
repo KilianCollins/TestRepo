@@ -28,7 +28,7 @@ public class FRED {
     public static Rect yellowRect = new Rect(60,105,15,15);
     public static int threshRed = 145, threshBlue = 150, threshYellow = 100;
     public static int filterVal = 10;
-
+      
 
     public FRED(HardwareMap hardwareMap, String camName){
 
